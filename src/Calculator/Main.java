@@ -13,7 +13,11 @@ public class Main {
        System.out.println("숫자를 입력해주세요");
        int number2 = sc.nextInt();
        int sum = (number1 + number2);
-
+       int multi = (number1 * number2);
+       int minus = (number1 - number2);
+       System.out.println("결과값입니다. = " + sum);
+       System.out.println("결과값입니다. = " + minus);
+       System.out.println("결과값입니다. = " + multi);
         if (operator == '+') {
 
         } else if (operator == '*') {
