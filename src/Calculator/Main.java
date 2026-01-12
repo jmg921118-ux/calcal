@@ -40,7 +40,6 @@ public class Main {
                     int result = number1 / number2;
                     System.out.println("결과값입니다. = " + result);
                 }catch (ArithmeticException e) {
-                    int divi = (number1 / number2);
                     // [수습] 0으로 나눠서 에러가 나면, 프로그램이 죽지 않고 바로 여기로 옵니다.
                     System.out.println("0으로 나눌 수 없습니다!.");
 
