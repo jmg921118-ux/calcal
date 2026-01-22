@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         // 1. 장바구니(List) 준비
         List<Product> products = new ArrayList<>();
-
+        List<Category> categories = new ArrayList<>();
 
 
         // 3. 상품 진열하기 (.add) -> 가게 문 열기 전에 미리 채워놔야 함!
@@ -17,7 +17,12 @@ public class Main {
         products.add(new Product("MacBook Pro", "M3 칩셋이 탑재된 노트북", 2400000, 150));
         products.add(new Product("AirPods Pro", "노이즈 캔슬링 무선 이어폰", 350000, 110));
 
-        CommerceSystem cs = new CommerceSystem(products);
+        categories.add(new Category("전자제품", products));
+        categories.add(new Category("의류", products));
+        categories.add(new Category("무기류", products));
+        categories.add(new Category("가구류", products));
+
+        CommerceSystem cs = new CommerceSystem(categories);
 
         cs.start();
 

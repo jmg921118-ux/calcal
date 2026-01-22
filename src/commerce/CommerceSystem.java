@@ -4,66 +4,56 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CommerceSystem {
-    //main에서 관리 하던걸 이제 여기에서 관리 할 예정
-    List<Product> products;
+    // 이제 낱개가 아니라 '카테고리 묶음(책장)'을 가지고 있습니다.
+    private List<Category> categories;
     Scanner sc = new Scanner(System.in);
-    //생성자: 사장님이 준 걸 받아서 내 장부(this.products)에 저장!
-    public CommerceSystem(List<Product> products) {
-        this.products = products;
+
+    // 생성자: 사장님(Main)이 준 카테고리 묶음을 받습니다.
+    public CommerceSystem(List<Category> categories) {
+        this.categories = categories;
     }
 
-    public void start()  {
-        // 4. 가게 문 오픈 (무한 반복 시작)
+    public void start() {
         while (true) {
-            System.out.println("=== 상품 목록 ===");
-
-            // 5. 진열된 상품 하나씩 보여주기 (향상된 for문)
-            int i = 1;
-            for (Product product : products) {
-
-
-                // [해결책] 순서를 바꿈: 이름 -> 가격 -> 재고 -> 설명(맨 뒤로!)
-                // %-20s: 20칸 확보하고 왼쪽 정렬
-                // %,d: 숫자에 3자리마다 콤마(,) 찍어줌 (꿀팁!)
-                //이부분은 AI의 도움으로 정렬하는법을 printf로 만들었습니다.
-                System.out.printf("%-4d | %-20s | %-12d원 | %-5d개 | %s\n", i++,  product.name, product.price, product.stock, product.explain);
+            // 1. 먼저 카테고리(책)들을 보여줍니다.
+            System.out.println("\n=== 카테고리 목록 ===");
+            for (int i = 0; i < categories.size(); i++) {
+                // 책장에서 책을 한 권 꺼내서(.get), 이름표를 읽습니다(.getCategoryName)
+                System.out.println((i + 1) + ". " + categories.get(i).getCategoryName());
             }
 
-            // 6. 안내 메시지 및 입력
-            System.out.println("\0을 누르면 종료: ");
-            int input = sc.nextInt();
+            System.out.println("0. 종료");
+            System.out.print("원하는 카테고리 번호를 입력하세요: ");
+            int catInput = sc.nextInt();
 
-
-            // 7. 종료 조건 (비상구)
-            if (input == 0) {
+            // 종료 조건
+            if (catInput == 0) {
                 System.out.println("프로그램을 종료합니다.");
                 break;
-
             }
-            else if (input > 0 && input <= products.size()) {
-                // [해석] 0보다 크고, 상품 개수(size)보다 작거나 같은 숫자를 눌렀다면? (유효한 번호라면?)
 
-                // 1. 사람이 누른 번호(1)를 컴퓨터 번호(0)로 변환! (빼기 1 중요!)
-                int index = input - 1;
-
-                // 2. 가방에서 해당 번호의 상품 꺼내기
-                Product selectedProduct = products.get(index);
-
-                // 3. 상세 내용 보여주기
-                System.out.println("\n 선택하신 상품의 상세 정보입니다!");
-                System.out.println("=====================================");
-                System.out.println("이  름 : " + selectedProduct.name);
-                System.out.println("가  격 : " + selectedProduct.price + "원");
-                System.out.println("재  고 : " + selectedProduct.stock + "개");
-                System.out.println("설  명 : " + selectedProduct.explain);
-                System.out.println("=====================================");
-
+            // 잘못된 번호를 눌렀을 때
+            if (catInput < 1 || catInput > categories.size()) {
+                System.out.println("없는 번호입니다. 다시 입력해주세요.");
+                continue; // 다시 위로 돌아가기
             }
-            else {
-                // 1, 2, 3, 4 도 아니고 0도 아닌 엉뚱한 숫자를 눌렀을 때
-                System.out.println(" 없는 번호입니다. 다시 입력해주세요.");
+
+            // 2. 선택한 카테고리(책)를 책장에서 꺼냅니다!
+            Category selectedCategory = categories.get(catInput - 1);
+
+            // 3. 이제 그 책 안에 있는 상품들(products)을 호출한다
+            // 여기서 selectedCategory.getProducts()를 쓴다
+            List<Product> productList = selectedCategory.getProducts();
+
+            System.out.println("\n=== " + selectedCategory.getCategoryName() + " 상품 목록 ===");
+
+            // 상품 보여주기
+            int i = 1;
+            for (Product product : productList) {
+                System.out.printf("%-4d | %-20s | %,d원 | %d개 | %s\n",
+                        i++, product.getName(), product.getPrice(), product.getStock(), product.getExplain());
             }
+
         }
     }
-
 }
