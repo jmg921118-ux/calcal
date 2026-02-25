@@ -148,6 +148,7 @@ spring.application.name=CommercePilot
 
 spring.datasource.url=jdbc:mysql://localhost:3306/CommercePilot
 spring.datasource.username=your-name
+spring.datasource.password=your-password
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 spring.jpa.hibernate.ddl-auto=update
