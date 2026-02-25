@@ -72,6 +72,76 @@
 
 ---
 
+## 📡 API 엔드포인트
+
+### 1. 슈퍼관리자 (SuperAdmin)
+
+| Method | Endpoint | 설명 | 권한 |
+| :---: | :--- | :--- | :---: |
+| `GET` | `/api/admins` | 관리자 리스트 조회 | 슈퍼관리자 |
+| `GET` | `/api/admins/{adminId}` | 관리자 상세 조회 | 슈퍼관리자 |
+| `PATCH` | `/api/admins/{adminId}` | 관리자 정보 수정 | 슈퍼관리자 |
+| `PATCH` | `/api/admins/{adminId}/role` | 관리자 역할 변경 | 슈퍼관리자 |
+| `PATCH` | `/api/admins/{adminId}/status` | 관리자 상태 변경 | 슈퍼관리자 |
+| `DELETE` | `/api/admins/{adminId}` | 관리자 삭제 | 슈퍼관리자 |
+
+### 2. 관리자 (Admin)
+
+| Method | Endpoint | 설명 | 권한 |
+| :---: | :--- | :--- | :---: |
+| `POST` | `/api/admins/signup` | 관리자 회원가입 (이메일, 비밀번호 암호화 저장) | 누구나 |
+| `POST` | `/api/admins/login` | 관리자 로그인 (세션 ID 발급) | 누구나 |
+| `POST` | `/api/admins/logout` | 관리자 로그아웃 | 로그인 |
+| `PATCH` | `/api/admins/me/password` | 비밀번호 변경 | 본인 |
+
+### 3. 주문 (Order)
+
+| Method | Endpoint | 설명 | 권한 |
+| :---: | :--- | :--- | :---: |
+| `GET` | `/api/orders` | 주문 전체 조회 | 로그인 필수 |
+| `GET` | `/api/orders/{orderId}` | 주문 상세 조회 | 로그인 필수 |
+| `PUT` | `/api/orders/{orderId}` | 주문 상세 수정 | 로그인 필수 |
+| `DELETE` | `/api/orders/{orderId}` | 주문 단건 삭제 | 로그인 필수 |
+| `POST` | `/api/orders` | CS 주문 생성 | CS 관리자 |
+
+### 4. 카테고리 (Category)
+
+| Method | Endpoint | 설명 | 권한 |
+| :---: | :--- | :--- | :---: |
+| `POST` | `/api/categories` | 카테고리 작성 | 관리자 |
+| `GET` | `/api/categories` | 카테고리 전체 조회 | 누구나 |
+| `GET` | `/api/categories/{categoryId}` | 단일 카테고리 조회 | 누구나 |
+| `PATCH` | `/api/categories/deleted` | 삭제된 카테고리 조회 | 관리자 |
+| `PUT` | `/api/categories/{categoriesId}` | 카테고리 수정 | 관리자 |
+| `PUT` | `/api/categories/{categoriesId}/restore` | 카테고리 복원 | 관리자 |
+| `DELETE` | `/api/categories/{categoriesId}` | 카테고리 삭제 (Soft Delete) | 관리자 |
+
+### 5. 상품 (Product)
+
+| Method | Endpoint | 설명 | 권한 |
+| :---: | :--- | :--- | :---: |
+| `POST` | `/api/products` | 상품 작성 | 관리자 |
+| `GET` | `/api/products` | 상품 전체 조회 | 누구나 |
+| `GET` | `/api/products/{productId}` | 단일 상품 조회 | 누구나 |
+| `PATCH` | `/api/products/{productId}` | 상품 정보 수정 | 관리자 |
+| `PATCH` | `/api/products/{productId}/stock` | 상품 재고 변경 | 관리자 |
+| `PATCH` | `/api/products/{productId}/stock/increase` | 상품 재고 추가 | 관리자 |
+| `PATCH` | `/api/products/{productId}/stock/decrease` | 상품 재고 감소 | 관리자 |
+| `PATCH` | `/api/products/{productId}/stock/discontinue` | 상품 단종 | 관리자 |
+| `DELETE` | `/api/products/{productId}` | 상품 삭제 (Soft Delete) | 관리자 |
+
+### 6. 고객 (Customer)
+
+| Method | Endpoint | 설명 | 권한 |
+| :---: | :--- | :--- | :---: |
+| `GET` | `/api/customers?keyword=customer&status=DELETED` | 고객 목록 조회 | 관리자 |
+| `GET` | `/api/customers/{customerId}` | 단일 고객 조회 | 관리자 |
+| `PATCH` | `/api/customers/{customerId}` | 고객 정보 수정 | 관리자 |
+| `PATCH` | `/api/customers/{customerId}/status` | 고객 상태 수정 | 관리자 |
+| `DELETE` | `/api/customers/{customerId}` | 고객 삭제 (Soft Delete) | 관리자 |
+
+---
+
 ## 🛠 주요 구현 기능
 
 ### 1. Auth & Admin (관리자)
@@ -152,7 +222,7 @@ cd first-prj-be
 ### 3. 데이터베이스 설정
 ```sql
 -- MySQL에 데이터베이스 생성
-CREATE DATABASE CommercePilot DEFAULT;
+CREATE DATABASE CommercePilot DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 > `ddl-auto=update` 설정으로 애플리케이션 실행 시 엔티티 기준으로 테이블이 자동 생성/갱신됩니다.
@@ -164,8 +234,8 @@ CREATE DATABASE CommercePilot DEFAULT;
 spring.application.name=CommercePilot
 
 spring.datasource.url=jdbc:mysql://localhost:3306/CommercePilot
-spring.datasource.username=your-name
-spring.datasource.password=ypur-password
+spring.datasource.username=root
+spring.datasource.password=12345678
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 spring.jpa.hibernate.ddl-auto=update
