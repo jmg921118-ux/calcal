@@ -222,7 +222,7 @@ cd first-prj-be
 ### 3. 데이터베이스 설정
 ```sql
 -- MySQL에 데이터베이스 생성
-CREATE DATABASE CommercePilot DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE CommercePilot DEFAULT;
 ```
 
 > `ddl-auto=update` 설정으로 애플리케이션 실행 시 엔티티 기준으로 테이블이 자동 생성/갱신됩니다.
@@ -234,8 +234,8 @@ CREATE DATABASE CommercePilot DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unic
 spring.application.name=CommercePilot
 
 spring.datasource.url=jdbc:mysql://localhost:3306/CommercePilot
-spring.datasource.username=root
-spring.datasource.password=12345678
+spring.datasource.username=user-name
+spring.datasource.password=user-password
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 spring.jpa.hibernate.ddl-auto=update
