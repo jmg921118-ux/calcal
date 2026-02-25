@@ -53,6 +53,23 @@
 
 <img width="1280" height="842" alt="Image" src="https://github.com/user-attachments/assets/fb60e0e9-4fcb-48e9-a3d2-b563e266be9d" />
 
+### 데이터베이스 구조
+
+본 프로젝트는 관리자 기반의 커머스 백오피스 시스템을 가정하여 설계되었습니다.
+관리자는 상품과 주문을 관리하고, 고객은 상품을 주문하는 구조를 가집니다.
+
+#### 주요 엔티티 관계
+
+| 관계 | 설명 |
+| :--- | :--- |
+| **Customer - Order (1:N)** | 한 명의 고객은 여러 개의 주문을 생성할 수 있습니다. |
+| **Admin - Product (1:N)** | 관리자는 여러 상품을 등록 및 수정하며 상품 관리의 책임을 가집니다. |
+| **Admin - Order (1:N)** | 주문은 관리자에 의해 처리(승인/취소/관리)됩니다. |
+| **Product - Order (1:N)** | 하나의 상품은 여러 주문에 포함될 수 있습니다. |
+| **Category - Product (1:N)** | 하나의 카테고리는 여러 상품을 포함합니다. |
+| **Category - Category (Self-Reference, 1:N)** | 카테고리는 부모 카테고리를 가질 수 있어 계층형(대분류/중분류/소분류) 구조를 지원합니다. |
+| **SuperAdmin - Admin (1:N)** | 상위 관리자는 여러 관리자를 생성 및 권한 관리할 수 있습니다. |
+
 ---
 
 ## 🛠 주요 구현 기능
@@ -147,8 +164,8 @@ CREATE DATABASE CommercePilot DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unic
 spring.application.name=CommercePilot
 
 spring.datasource.url=jdbc:mysql://localhost:3306/CommercePilot
-spring.datasource.username=your-name
-spring.datasource.password=your-password
+spring.datasource.username=root
+spring.datasource.password=12345678
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 spring.jpa.hibernate.ddl-auto=update
