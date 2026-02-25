@@ -11,13 +11,13 @@
 ![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
-| 기술 스택 (Tech) | 버전 정보 (Version) |
-| :--- | :--- |
-| **Java** | 17 |
-| **Spring Boot** | 4.0.2 |
-| **Spring Dependency Management** | 1.1.7 |
-| **Spring Data JPA** | - |
-| **MySQL** | - |
+| 기술 스택 | 버전 |
+| :--- | :---: |
+| Java | 17 |
+| Spring Boot | 4.0.2 |
+| Spring Data JPA | Spring Boot 관리 |
+| MySQL | - |
+| io.spring.dependency-management | 1.1.7 |
 
 - **Architecture**: Domain-Driven Design (Partial), Layered Architecture (Query/Command Service)
 
@@ -83,53 +83,27 @@
 
 ---
 
-## 📁 프로젝트 구조 (Directory Structure)
-```text
+## 📁 프로젝트 구조
+```
 CommercePilot/
 ├── src/main/java/com/example/commercepilot/
 │   ├── admin/                      # 관리자 도메인
-│   │   ├── config/                 # 세션 상수 등 관리자 관련 설정
-│   │   ├── controller/             # 관리자 API 컨트롤러 (Auth 등)
-│   │   ├── dto/                    # 관리자 DTO
-│   │   │   ├── request/            # 요청 DTO (Login/Signup/PasswordChange 등)
-│   │   │   ├── response/           # 응답 DTO
-│   │   │   └── session/            # 세션 DTO (LoginAdmin 등)
-│   │   ├── entity/                 # 관리자 엔티티
-│   │   ├── repository/             # 관리자 Repository
-│   │   └── service/                # 관리자 Service (Auth/Command 등)
-│   │
+│   │   ├── config/
+│   │   ├── controller/
+│   │   ├── dto/
+│   │   │   ├── request/
+│   │   │   ├── response/
+│   │   │   └── session/
+│   │   ├── entity/
+│   │   ├── repository/
+│   │   └── service/
 │   ├── category/                   # 카테고리 도메인
-│   │   ├── controller/
-│   │   ├── dto/
-│   │   ├── entity/
-│   │   ├── repository/
-│   │   └── service/
-│   │
 │   ├── customer/                   # 고객 도메인
-│   │   ├── controller/
-│   │   ├── dto/
-│   │   ├── entity/
-│   │   ├── repository/
-│   │   └── service/
-│   │
 │   ├── orders/                     # 주문 도메인
-│   │   ├── controller/
-│   │   ├── dto/
-│   │   ├── entity/
-│   │   ├── repository/
-│   │   └── service/
-│   │
 │   ├── product/                    # 상품 도메인
-│   │   ├── controller/
-│   │   ├── dto/
-│   │   ├── entity/
-│   │   ├── repository/
-│   │   └── service/
-│   │
-│   ├── config/                     # 전역 설정/공통 설정
-│   │   ├── BaseEntity              # 공통 엔티티(생성/수정일 등)
-│   │   └── PasswordEncoder         # 암호화 설정
-│   │
+│   ├── config/                     # 전역 설정
+│   │   ├── BaseEntity
+│   │   └── PasswordEncoder
 │   ├── exception/                  # 예외/공통 응답 처리
 │   │   ├── ApiResponse
 │   │   ├── CustomException
@@ -137,26 +111,23 @@ CommercePilot/
 │   │   ├── ErrorResponse
 │   │   ├── FieldError
 │   │   └── GlobalExceptionHandler
-│   │
 │   └── CommercePilotApplication.java
-│
 ├── src/main/resources/
 ├── src/test/
-├── build/                          # 빌드 산출물
-├── gradle/                         # gradle wrapper 관련
-├── .gitignore
-└── .gitattributes
+└── build.gradle
+```
+
 ---
 
 ## 🚨 트러블 슈팅 (Troubleshooting)
 
 ### 1. 🛡️ 엄격한 협업 룰과 Git 브랜치 전략
 - **Issue & Background**: 다수의 팀원이 동시에 코드를 병합하는 과정에서, 컴파일 에러가 포함된 불완전한 코드가 공용 브랜치(`develop`)에 반영될 수 있는 위험성을 인지함.
-- **Solution (작업 내용 및 합의)**: 
-  - `develop` 브랜치 병합 전, 무조건 본인의 로컬 환경(IntelliJ)에서 테스트를 완료하여 컴파일 에러가 없는지 확인하는 규칙 수립.
-  - 에러 발생 시 강제로 머지하지 않고 별도 브랜치에서 수정 후 다시 PR(Pull Request)을 올림.
-  - 병합 후 예기치 않게 발생한 긴급 에러는 `fix` 브랜치(Hotfix)를 통해 빠르게 대응.
-- **Insight (배운 점)**: 깨진 코드가 공용 브랜치에 올라가면 팀 전체의 개발 진행이 멈추는 심각한 병목 현상(Bottleneck)이 발생함. 조금 번거롭더라도 PR 전 꼼꼼한 사전 테스트가 결국 팀 전체의 개발 속도와 프로젝트 안정성을 높이는 가장 확실한 길임을 깨달음.
+- **Solution**:
+  - `develop` 브랜치 병합 전, 로컬 환경에서 테스트를 완료하여 컴파일 에러가 없는지 확인하는 규칙 수립.
+  - 에러 발생 시 강제로 머지하지 않고 별도 브랜치에서 수정 후 다시 PR을 올림.
+  - 병합 후 긴급 에러는 `fix` 브랜치(Hotfix)를 통해 빠르게 대응.
+- **Insight**: 깨진 코드가 공용 브랜치에 올라가면 팀 전체의 개발 진행이 멈추는 병목 현상이 발생함. PR 전 꼼꼼한 사전 테스트가 팀 전체의 개발 속도와 안정성을 높이는 가장 확실한 방법임을 깨달음.
 
 ---
 
@@ -164,7 +135,7 @@ CommercePilot/
 
 ### 🗣️ 팀원별 KPT 및 회고
 - **정채림 (Leader)**: 팀원 간 소통과 배려에 만족하며, 앞으로도 정해진 컨벤션을 철저히 지켜야겠다고 다짐함.
-- **이재민 (Sub Leader)**: 잦은 소통과 실수 없는 Git(GitHub) 활용에 만족함. 팀 협업의 안정성을 유지하는 데 기여하여 뜻깊음.
+- **이재민 (Sub Leader)**: 잦은 소통과 실수 없는 Git 활용에 만족함. 팀 협업의 안정성을 유지하는 데 기여하여 뜻깊음.
 - **이지민 (Sub Leader)**: 레이어 책임 분리와 코드 개선 경험에 만족함. 설계 단계에서 도메인 책임과 세션 정의를 더 깊이 고민해 볼 계획.
-- **정민교 (Presenter)**: 레이어 책임 분리와 코드 개선에 전반적으로 만족함. 향후 프로젝트 초기 설계 단계에서 도메인의 책임 할당과 세션 정의에 대해 더 깊은 고민이 필요함을 체감함.
-- **신현민 (Sub Leader)**: 공통 DTO를 활용한 코드 가독성 향상을 체감함. 앞으로도 속도에 맞춘 원활한 소통을 유지하고 기술적 기본 구성을 탄탄히 하는 데 주력할 예정.
+- **정민교 (Presenter)**: 레이어 책임 분리와 코드 개선에 전반적으로 만족함. 향후 프로젝트 초기 설계 단계에서 도메인 책임 할당과 세션 정의에 대해 더 깊은 고민이 필요함을 체감함.
+- **신현민 (Sub Leader)**: 공통 DTO를 활용한 코드 가독성 향상을 체감함. 앞으로도 원활한 소통을 유지하고 기술적 기본 구성을 탄탄히 하는 데 주력할 예정.
